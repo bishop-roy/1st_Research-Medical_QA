@@ -1,0 +1,246 @@
+Paper1: RAGTruth: A Hallucination Corpus for Developing Trustworthy Retrieval-Augmented Language Models
+
+Link: https://arxiv.org/html/2401.00396v2
+Problem:
+LLMs in RAG systems generate unsupported or contradictory statements, and existing detection datasets lack large-scale, word-level human annotations
+.
+Method:
+The authors built a human-annotated span-level hallucination corpus across 3 tasks and fine-tuned a Llama-2-13B detector model to identify and filter hallucinated text
+.
+Dataset:
+The RAGTruth dataset contains 2,965 instances, 17,790 LLM responses, and 14,289 human-labeled hallucination spans across QA, Data-to-Text, and Summarization tasks
+.
+Metric:
+Precision, Recall, and F1 score evaluated at both answer and character-span levels
+.
+Result:
+The fine-tuned Llama-2-13B detector achieved an answer-level F1 score of 78.7% and a span-level F1 score of 52.7%, reducing response hallucinations by up to 63.2% through filtering
+.
+Limitation:
+The corpus does not cover all possible RAG application scenarios, and human annotation of subtle hallucinations remains inherently difficult
+.
+My Research Connection:
+Both studies share the core idea of fine-grained, claim/span-level evidence verification to make RAG systems trustworthy
+. However, RAGTruth focuses on general open-domain tasks using a fine-tuned 13B model, whereas Research 1 applies lightweight claim verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+
+
+Paper2: Comprehensive and Practical Evaluation of Retrieval-Augmented Generation Systems for Medical Question Answering
+Link: https://www.alphaxiv.org/abs/2411.09213
+Problem:
+Standard medical RAG benchmarks only evaluate target accuracy, failing to test realistic model resilience against noisy, insufficient, or factually incorrect retrieved documents.
+Method:
+The authors created MedRGB to test LLMs across four practical scenarios: Standard-RAG, Sufficiency (noise handling), Integration (sub-task reasoning), and Robustness (misinformation detection).
+Dataset:
+3,480 evaluation instances constructed from 4 medical QA sets (BioASQ, PubMedQA, MedQA, MMLU) using offline MedCorp documents and online Google search results.
+Metric:
+Main question accuracy, noise detection accuracy, percentage of insufficient information responses, sub-question exact-match/GPT scores, and factual error detection rate.
+Result:
+Top LLMs like GPT-4o excel in standard RAG but degrade in realistic settings—often failing to detect noise, misjudging context sufficiency, or accepting false adversarial facts.
+Limitation:
+The benchmark is restricted to single-turn multiple-choice QA on a limited set of model architectures due to computational and financial constraints.
+My Research Connection:
+Both studies address medical RAG trustworthiness when dealing with noisy or incorrect evidence. However, MedRGB evaluates synthetic multiple-choice benchmarks across general medicine, whereas Research 1 conducts claim-level evidence verification specifically on Type 2 Diabetes clinical guidelines.
+
+
+
+
+Paper3: Medical Hallucination in Foundation Models and Their Impact on Healthcare
+
+Link: https://arxiv.org/html/2503.05777v2
+Problem:
+Foundation models generate plausible but factually incorrect or unsupported medical outputs, threatening patient safety and clinical decision-making
+.
+Method:
+The authors established a medical hallucination taxonomy, evaluated 11 LLMs on Med-HALT and NEJM case records with physician audits, tested prompting/RAG mitigations, and surveyed 70 clinicians
+.
+Dataset:
+Med-HALT benchmark (350 sampled questions), 20 NEJM case reports, and a 70-clinician survey
+.
+Metric:
+Hallucination Pointwise Score, Hallucination Resistance %, UMLSBERT Cosine Similarity Score, and Clinical Risk Level (0–5)
+.
+Result:
+General-purpose LLMs significantly outperformed medical-specialized models in hallucination resistance (median 76.6% vs. 51.3%), with Chain-of-Thought prompting proving most effective
+.
+Limitation:
+Annotator agreement was moderate due to clinical ambiguity, and external retrieval sometimes conflicted with parametric model knowledge
+.
+My Research Connection:
+Both studies address medical RAG reliability and hallucination mitigation; however, while this paper broadly benchmarks 11 foundation models across general medical tasks, Research 1 applies lightweight claim-level evidence verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+
+Paper4: MedRAGChecker: Claim-Level Verification for Biomedical Retrieval-Augmented Generation
+
+Link: https://arxiv.org/html/2601.06519v1
+Problem:
+Whole-answer scoring in biomedical RAG conceals dangerous isolated hallucinations and unsupported clinical claims
+.
+Method:
+The authors decompose answers into atomic claims and verify them by fusing textual NLI predictions with Drug Repurposing Knowledge Graph (DRKG) signals using distilled student models
+.
+Dataset:
+Four biomedical QA benchmarks (PubMedQA, MedQuAD, TREC LiveQA Medical, MedRedQA) with evidence from PubMed abstracts and DRKG
+.
+Metric:
+Faithfulness, Hallucination Rate, Safety-Critical Error Rate, Context Precision, and 3-way NLI Accuracy/F1
+.
+Result:
+The distilled ensemble verifier achieved 87.4% accuracy, and KG fusion successfully corrected over-entailment errors on safety-critical drug-disease claims
+.
+Limitation:
+The approach depends on teacher model pseudo-labels, suffers from class imbalance in contradiction detection, and is limited by KG coverage and surface-form entity linking
+.
+My Research Connection:
+Both works perform fine-grained claim-level verification for RAG accuracy
+. While MedRAGChecker builds a distilled multi-model pipeline with Knowledge Graph fusion across broad biomedical QA, Research 1 applies lightweight claim verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+Paper5: MedRAGChecker: Claim-Level Verification for Biomedical Retrieval-Augmented Generation
+
+Link: https://www.alphaxiv.org/abs/2601.06519v1
+.
+Problem:
+Whole-answer scoring in biomedical RAG conceals isolated, safety-critical hallucinated or contradicted claims
+.
+Method:
+Decomposes answers into atomic claims and verifies them by fusing textual NLI predictions with Drug Repurposing Knowledge Graph (DRKG) signals using distilled student models
+.
+Dataset:
+Four biomedical QA benchmarks (PubMedQA, MedQuAD, TREC LiveQA Medical, MedRedQA) using PubMed abstracts and DRKG
+.
+Metric:
+Faithfulness, Hallucination Rate, Safety-Critical Error Rate, Context Precision, and 3-way NLI Accuracy/F1
+.
+Result:
+The distilled ensemble verifier achieved 87.4% accuracy, and KG fusion corrected over-entailment errors on safety-critical drug-disease claims
+.
+Limitation:
+Relies on teacher model pseudo-labels, suffers from class imbalance in contradiction detection, and is limited by KG coverage and surface-form entity linking
+.
+My Research Connection:
+Both studies perform fine-grained claim-level evidence verification for medical RAG accuracy
+. While MedRAGChecker builds a multi-model pipeline with Knowledge Graph fusion across general biomedical QA
+, Research 1 applies lightweight claim verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+Paper6: Evaluation Methods for Inference-Time Retrieval-Augmented and Graph Retrieval-Augmented Large Language Models in Health Care: Scoping Review
+Link: https://www.jmir.org/2026/1/e90046
+
+Problem:
+Evaluation practices for healthcare RAG and GraphRAG systems are fragmented, inconsistent, and over-reliant on offline whole-answer scores.
+Method:
+A PRISMA-ScR scoping review mapping evaluation constructs, system layers, and settings across 157 healthcare RAG studies.
+Dataset:
+157 empirical healthcare studies evaluating inference-time RAG and GraphRAG LLM systems.
+Metric:
+Retrieval metrics (Recall, Precision, MRR), grounding/verification granularity, automated metrics, human evaluation IRR, and safety scores.
+Result:
+Only 29.9% of studies evaluated the retrieval layer independently, only 14% performed fine-grained evidence verification, and 89.2% relied solely on offline evaluations.
+Limitation:
+Limited to English records from 2024–2026, relies on reporting completeness in published papers, and excludes meta-analytic effect pooling.
+My Research Connection:
+Both studies focus on fine-grained evidence verification in medical RAG systems. While p6 t1.pdf provides a broad scoping review showing that claim-level verification is severely under-evaluated (only 10.8% of studies), Research 1 directly fills this practical gap by building a claim-level evidence verifier for Type 2 Diabetes clinical guidelines.
+
+
+
+Paper7: Mitigating hallucinations in healthcare AI: a systematic review of evidence-based strategies
+Link: https://link.springer.com/article/10.1186/s12913-026-14851-1?error=cookies_not_supported&code=be5d639d-85a1-4163-92ce-56edee09adfd
+Problem:
+Generative AI models in healthcare produce factually incorrect hallucinations that threaten patient safety and clinical decision-making.
+Method:
+A PRISMA-compliant systematic review of 44 empirical studies (2019–2025) evaluating technical and human-centered hallucination mitigation strategies.
+Dataset:
+44 included studies from 6 databases (PubMed, IEEE Xplore, ACM Digital Library, Scopus, Web of Science, arXiv) across informatics journals, conferences, and preprints.
+Metric:
+Joanna Briggs Institute (JBI) quality appraisal scores, percentage reduction in hallucinations, MediHall Score, ACHMI, and Med-HALT scores.
+Result:
+RAG reduced hallucinations by 30–50%, Knowledge Graphs by 25–45%, and Human-in-the-Loop by 85–95%, with combined multi-layer approaches showing the highest consistency.
+Limitation:
+Heterogeneous evaluation metrics prevented meta-analysis, and most primary studies lacked real-world prospective validation in clinical workflows.
+My Research Connection:
+Both studies address medical RAG reliability and hallucination reduction. While p7 t1.pdf provides a broad systematic review showing that single mitigation methods are insufficient, Research 1 directly implements a claim-level evidence verifier specifically for Type 2 Diabetes clinical guidelines.
+
+
+
+Paper8: Layered Hallucination Evaluation for Medical Question Answering Across Medical RAG Pipelines
+Link: https://www.algointel.org/index.php/algointel/article/view/41
+.
+Problem:
+Traditional monolithic metrics evaluate RAG answers as a single black box, failing to diagnose whether hallucinations originate from retrieval, reasoning, or generation errors
+.
+Method:
+The authors propose a 3-layer framework evaluating retrieval relevance, reasoning entailment (NLI/relation extraction), and generation lexical fidelity independently
+.
+Dataset:
+Simulated multi-specialty clinical query dataset evaluated against peer-reviewed literature, practice guidelines, and board-certified medical expert annotations [46–48].
+Metric:
+Precision, Recall, and Pearson Correlation coefficient (r) against expert human severity scores
+.
+Result:
+The comprehensive layered framework achieved 0.89 precision, 0.87 recall, and a 0.88 correlation with expert human judgment, outperforming the monolithic baseline (0.55 correlation)
+.
+Limitation:
+Multi-stage evaluation adds heavy computational latency and relies on the accuracy of domain-specific evaluator models
+.
+My Research Connection:
+Both studies evaluate medical RAG factual grounding using NLI-based verification
+. While p8 t1.pdf tests a 3-layer system across general medical queries, Research 1 applies lightweight claim-level evidence verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+Paper9: A Self-Controlled Benchmark of Retrieval-Augmented Generation for Large Language Models on Clinical Guideline Questions
+Link: https://pmc.ncbi.nlm.nih.gov/articles/PMC13465324/
+
+Problem:
+Standard LLMs produce factual hallucinations and struggle to adhere reliably to specialized evidence-based medical guidelines
+.
+Method:
+A prospective benchmark evaluating paired LLMs (with and without guideline retrieval) using a transparent retrieval pipeline, expert reviewers, and an automated judge
+.
+Dataset:
+50 clinical questions covering 17 domains evaluated against the German S3 guideline for oral cavity carcinoma
+.
+Metric:
+Citation groundedness, retrieval recall@5, content-level hallucination rate, automated judge accuracy (1–5 scale), and expert Likert scores
+.
+Result:
+Guideline retrieval reduced content-level hallucinations from 42% to 4% across models and improved accuracy by a pooled +0.64 points
+.
+Limitation:
+Human expert blinding failed (98.5% identification rate), and the evaluation was limited to a single German cancer guideline in a controlled setting
+.
+My Research Connection:
+Both works aim to eliminate medical AI hallucinations by grounding outputs in official clinical guidelines
+. While p9 t1.pdf evaluates whole-answer accuracy across oral cancer questions using an LLM judge, Research 1 applies lightweight atomic claim verification specifically to Type 2 Diabetes clinical guidelines
+.
+
+
+
+Paper10: RAG-X: Systematic Diagnosis of Retrieval-Augmented Generation for Medical Question Answering
+Link: https://arxiv.org/html/2603.03541v1
+Problem:
+Standard aggregate metrics in medical RAG evaluations mask underlying retrieval and generation failures, hiding ungrounded "lucky guesses."
+Method:
+The authors developed RAG-X, a diagnostic framework that decouples retriever and generator evaluation and categorizes outputs into four Context Utilization Efficiency (CUE) quadrants.
+Dataset:
+Three medical QA benchmarks: PubMedQA (1,000 questions), GuidelineQA (59 clinical guideline questions), and MedQuAD-GHR (500 genetics QA pairs).
+Metric:
+MRR, Recall@k, MAP, CUE Quadrant Percentages (% Effective Use, % Lucky Guess), Token F1, Semantic Similarity, and LLM Context Adherence.
+Result:
+RAG-X exposed a 14% gap between accuracy and true grounding, revealing that 33.9% of correct-looking answers were ungrounded "lucky guesses" and 22% of retrieved evidence was redundant.
+Limitation:
+Retrievers suffer from high pairwise redundancy (22.0%), and standard adherence metrics fail to catch attribution errors when models rely on internal memory.
+My Research Connection:
+Both studies address factual grounding and context adherence in medical RAG. While RAG-X provides broad component-level diagnostics across general medical datasets, Research 1 applies lightweight claim-level evidence verification specifically to Type 2 Diabetes clinical guidelines.
